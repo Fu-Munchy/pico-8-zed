@@ -1,0 +1,13 @@
+id ="Pico-8"
+name ="Pico-8"
+description = "Pico-8 support"
+version = "0.0.1"
+authors = [" "]
+
+[language_servers.pico8-ls]
+name ="pico8-ls"
+languages = "Pico-8"
+
+[grammars.pico-8]
+repository = "https://github.com/paradoxskin/tree-sitter-pico8.git"
+rev = "6ea757f7eb8d391dbf24dbb9461990757946dd5e"

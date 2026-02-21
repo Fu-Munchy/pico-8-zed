@@ -1,0 +1,39 @@
+name: Publish VSCode extension
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  release-vs-marketplace:
+    runs-on: ubuntu-latest
+    environment: deploy-vsce-prod
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm install
+    - name: VSCE package and publish
+      env:
+        # see docs: https://code.visualstudio.com/api/working-with-extensions/continuous-integration#github-actions-automated-publishing
+        VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      run: |
+        npx vsce package
+        npx vsce publish
+  
+  release-open-vsx:
+    # following pattern: https://github.com/open-vsx/publish-extensions/blob/master/docs/exampleCI.yaml
+    runs-on: ubuntu-latest
+    environment: deploy-vsce-prod
+    steps:
+    # Make sure we're using node 20+
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm install
+    - name: OVSX package and publish
+      env:
+        OVSX_PAT: ${{ secrets.OVSX_PAT }}
+      run: |
+        npx ovsx publish --pat ${{ secrets.OVSX_PAT }}

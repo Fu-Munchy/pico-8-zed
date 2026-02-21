@@ -1,0 +1,11 @@
+[package]
+name = "pico-8-ls"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/main.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+zed_extension_api = "0.7.0"

@@ -1,0 +1,145 @@
+{
+	"name": "pico8-ls",
+	"description": "PICO-8 Language Server",
+	"icon": "img/icon.png",
+	"author": "JanPaul Bergeson",
+	"publisher": "PollywogGames",
+	"license": "MIT",
+	"version": "0.6.1",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/japhib/pico8-ls"
+	},
+	"engines": {
+		"vscode": "^1.63.0"
+	},
+	"activationEvents": [
+		"onLanguage:pico-8",
+		"onLanguage:pico-8-lua"
+	],
+	"main": "./client/out-min/main.js",
+	"categories": [
+		"Programming Languages",
+		"Snippets"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.pico8formatFile",
+				"title": "PICO-8 LS: Format File"
+			},
+			{
+				"command": "extension.pico8formatFileSeparateLines",
+				"title": "PICO-8 LS: Format File - Each Statement on Separate Line"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "PICO-8 LS configuration",
+			"properties": {
+				"pico8-ls.maxNumberOfProblems": {
+					"scope": "resource",
+					"type": "number",
+					"default": 100,
+					"description": "Controls the maximum number of problems produced by the server."
+				},
+				"pico8-ls.trace.server": {
+					"scope": "window",
+					"type": "string",
+					"enum": [
+						"off",
+						"messages",
+						"verbose"
+					],
+					"default": "off",
+					"description": "Traces the communication between VS Code and the language server."
+				}
+			}
+		},
+		"languages": [
+			{
+				"id": "pico-8",
+				"aliases": [
+					"PICO-8",
+					"pico-8",
+					"PICO8",
+					"pico8"
+				],
+				"extensions": [
+					".p8"
+				],
+				"configuration": "./syntaxes/language-configuration.json",
+				"icon": {
+					"light": "./img/light/icon.png",
+					"dark": "./img/dark/icon.png"
+				}
+			},
+			{
+				"id": "pico-8-lua",
+				"aliases": [
+					"PICO-8 Lua"
+				],
+				"extensions": [
+					".lua"
+				],
+				"configuration": "./syntaxes/language-configuration.json",
+				"icon": {
+					"light": "./img/light/icon.png",
+					"dark": "./img/dark/icon.png"
+				}
+			}
+		],
+		"grammars": [
+			{
+				"language": "pico-8",
+				"scopeName": "source.pico8",
+				"path": "./syntaxes/pico-8.tmLanguage.json"
+			},
+			{
+				"language": "pico-8-lua",
+				"scopeName": "source.pico8.lua",
+				"path": "./syntaxes/pico-8-lua.tmLanguage.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "pico-8",
+				"path": "./syntaxes/snippets.json"
+			},
+			{
+				"language": "pico-8-lua",
+				"path": "./syntaxes/snippets.json"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"vscode-publish": "vsce package && vsce publish",
+		"clean": "rm -rf client/out client/out-min server/out server/out-min",
+		"clean-deps": "rm -rf node_modules client/node_modules server/node_modules && npm install",
+		
+		"compile-tsc": "node node_modules/typescript/bin/tsc -b",
+
+		"compile": "npm run esbuild-client && npm run esbuild-server",
+		"esbuild-client": "esbuild ./client/src/extension.ts --bundle --outfile=./client/out-min/main.js --external:vscode --format=cjs --platform=node --minify",
+		"esbuild-server": "esbuild ./server/src/server.ts --bundle --outfile=./server/out-min/main.js --external:vscode --format=cjs --platform=node --minify",
+
+		"compile-nomin": "npm run esbuild-client-nomin && npm run esbuild-server-nomin",
+		"esbuild-client-nomin": "esbuild ./client/src/extension.ts --bundle --outfile=./client/out-min/main.js --external:vscode --format=cjs --platform=node",
+		"esbuild-server-nomin": "esbuild ./server/src/server.ts --bundle --outfile=./server/out-min/main.js --external:vscode --format=cjs --platform=node",
+
+		"lint": "eslint ./client/src ./server/src --ext .ts",
+		"lint:fix": "eslint ./client/src ./server/src --ext .ts --fix",
+		"postinstall": "cd client && npm install && cd ../server && npm install && cd .."
+	},
+	"devDependencies": {
+		"@types/mocha": "^8.2.2",
+		"@types/node": "^12.12.0",
+		"@typescript-eslint/eslint-plugin": "^4.23.0",
+		"@typescript-eslint/parser": "^4.23.0",
+		"esbuild": "^0.14.14",
+		"eslint": "^7.26.0",
+		"mocha": "^9.2.0",
+		"typescript": "^4.4.3"
+	}
+}
