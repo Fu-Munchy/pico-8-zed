@@ -1,7 +1,7 @@
 # The following has been copied and adjusted from
 # https://github.com/zed-extensions/lua/blob/main/languages/lua/config.toml
 name = "Pico-8"
-grammar = "pico8"
+grammar = "lua"
 path_suffixes = ["lua", "p8"]
 line_comments = ["-- ", "--- "]
 block_comment = ["--[ ","]"]
