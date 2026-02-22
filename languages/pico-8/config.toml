@@ -4,7 +4,7 @@ name = "Pico-8"
 grammar = "pico8"
 path_suffixes = ["lua", "p8"]
 line_comments = ["-- ", "--- "]
-block_comments = ["--[ ","]"]
+block_comment = ["--[ ","]"]
 hard_tabs = true
 autoclose_before = ";:.,=}])>"
 brackets = [
