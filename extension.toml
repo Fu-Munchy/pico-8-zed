@@ -9,6 +9,6 @@ authors = ["Fu Munchy"]
 name ="pico8-ls"
 languages = ["Pico-8"]
 
-# [grammars.pico8]
-# repository = "https://github.com/paradoxskin/tree-sitter-pico8.git"
-# rev = "6ea757f7eb8d391dbf24dbb9461990757946dd5e"
+[grammars.pico8]
+repository = "https://github.com/paradoxskin/tree-sitter-pico8.git"
+rev = "6ea757f7eb8d391dbf24dbb9461990757946dd5e"
