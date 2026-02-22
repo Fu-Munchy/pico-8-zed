@@ -1,5 +1,4 @@
 # Pico-8 language server for Zed
 
-This is my first ever rust project, so please bear with me as I learn from my mistakes.
-
-I am not working on this full-time, expect inconsistency in commits and updates.
+This extension is built from the code found in the [[https://github.com/zed-extensions/lua|Zed Lua]] extension,
+as Pico-8's language is built on version 5.2 of Lua.
