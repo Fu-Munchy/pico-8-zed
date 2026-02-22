@@ -1,8 +1,8 @@
-; The following file has been taken and modified from
-; https://github.com/zed-extensions/lua/blob/main/languages/lua/highlights.scm
-; The repository https://iiviigames.github.io/pico8-api/ was used for reference of pico-8 syntax.
-; Which includes pico-8 version 0.2.4. 
-; Therefore, any syntax found in or after pico-8 version 0.2.6c is missing.
+;; The following file has been taken and modified from
+;; https://github.com/zed-extensions/lua/blob/main/languages/lua/highlights.scm
+;; The repository https://iiviigames.github.io/pico8-api/ was used for reference of pico-8 syntax.
+;; Which includes pico-8 version 0.2.4.
+;; Therefore, any syntax found in or after pico-8 version 0.2.6c is missing.
 
 ;; Keywords
 
@@ -32,7 +32,7 @@
  "not"
  "or"
 ] @keyword.operator
-
+;; Added additional operators below from https://iiviigames.github.io/pico8-api/
 [
   "+"
   "-"
