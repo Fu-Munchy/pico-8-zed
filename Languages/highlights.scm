@@ -63,13 +63,6 @@
   "/="
 ] @operator
 
-;; Operator delimiter found in
-; https://iiviigames.github.io/pico8-api/
-; under operators
-[
-  "()"
-] @operator.delimiter
-
 ;; Punctuations
 
 [

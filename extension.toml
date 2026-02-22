@@ -1,8 +1,8 @@
-id ="Pico-8"
+id ="pico-8"
 name ="Pico-8"
-description = "Pico-8 support"
+description = "Pico-8 support for Zed"
 version = "0.0.1"
-authors = [" "]
+authors = ["Fu Munchy"]
 
 [language_servers.pico8-ls]
 name ="pico8-ls"
