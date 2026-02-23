@@ -91,7 +91,7 @@ impl Pico8Extension {
             &zed::LanguageServerInstallationStatus::CheckingForUpdate,
         );
 
-        // Get the latest release from your GitHub repo
+        // Get the latest release from the GitHub repo
         let release = zed::latest_github_release(
             "Fu-Munchy/pico-8-zed",
             zed::GithubReleaseOptions {
