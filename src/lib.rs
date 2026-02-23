@@ -113,26 +113,34 @@ impl Pico8Extension {
             .to_string_lossy()
             .to_string();
 
-        // Check if already downloaded
+        // Check if the main.js file has been downloaded before.
+        // The map_or() method defaults to false on Err and appiles m.is_file() if m is a file.
+        // Is equivalent to:
+        // match std::fs::metadata(path) {
+        //     Ok(m) => m.is_file(),
+        //     Err(_) => false,
+        // }
         if !std::fs::metadata(&server_path).map_or(false, |m| m.is_file()) {
-            // Update status: downloading
+            // Updates the installation status to Downloading
             zed::set_language_server_installation_status(
                 language_server_id,
                 &zed::LanguageServerInstallationStatus::Downloading,
             );
 
-            // Create the directory if it doesn't exist
+            // Create the directory and all of its
+            // parent directories (if missing), if &version_dir does not exist.
+            // Return the error "Failed to create directory" if the directory could not be created
             std::fs::create_dir_all(&version_dir)
                 .map_err(|e| format!("Failed to create directory: {}", e))?;
 
-            // Find the main.js asset in the release
+            // Find the main.js asset in the releases page of the github page
             let asset = release
                 .assets
                 .iter()
                 .find(|a| a.name == "main.js")
                 .ok_or_else(|| "No main.js asset found in release".to_string())?;
 
-            // Download the file (use relative path for download)
+            // Download the file and save it to the relative_server_path within the extension's directory
             zed::download_file(
                 &asset.download_url,
                 &relative_server_path,
