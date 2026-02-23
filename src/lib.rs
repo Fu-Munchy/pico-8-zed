@@ -1,5 +1,5 @@
-/// All of the following code was created by Claude AI
-use zed_extension_api::{self as zed, serde_json, LanguageServerId, Result};
+// All of the following code was created by Claude AI
+use zed_extension_api::{self as zed, /*serde_json,*/ LanguageServerId, Result};
 
 /// PICO-8 Language Server Extension for Zed;
 ///
@@ -13,17 +13,31 @@ struct Pico8Extension {
 }
 
 impl zed::Extension for Pico8Extension {
+    /// # Explanation
+    /// Creates a new instance of Pico8Extension, and sets the cached_server_path to none.
+    /// The server path is cached, such that repeated access of a given path doesn't have to occur.
+    /// This makes it simpler to "look up" the necessary server file at its path.
+    ///
+    /// # Analogy
+    /// Instead of opening every door at a hotel floor to find your room, simply note
+    /// your room down, and go directly to that room --> save lot of time!
     fn new() -> Self {
         Self {
             cached_server_path: None,
         }
     }
-
+    /// # Explanation
+    /// Puts together the methods in impl Pico8Extension {...} to execute
+    /// a command which will run the language server
+    /// The command looks something like this:
+    ///
+    ///> ```$ node <path/to/file/> --stdio```
     fn language_server_command(
         &mut self,
         language_server_id: &LanguageServerId,
         worktree: &zed::Worktree,
     ) -> Result<zed::Command> {
+        // The server_path variable is set to
         let server_path = self.server_path(language_server_id)?;
         let node_path = zed::node_binary_path()?;
 
@@ -34,23 +48,32 @@ impl zed::Extension for Pico8Extension {
         })
     }
 
-    fn language_server_initialization_options(
-        &mut self,
-        _language_server_id: &LanguageServerId,
-        _worktree: &zed::Worktree,
-    ) -> Result<Option<serde_json::Value>> {
-        Ok(Some(serde_json::json!({})))
-    }
+    // Generates a configuration file which is checked when the server is initialized
+    // This allows for the configuration of the server. Added by Claude, but not used.
+    // I believe this can be removed - but will keep this still in case there's a use
+    // in the future
 
-    fn language_server_workspace_configuration(
-        &mut self,
-        _language_server_id: &LanguageServerId,
-        _worktree: &zed::Worktree,
-    ) -> Result<Option<serde_json::Value>> {
-        Ok(Some(serde_json::json!({
-            "pico8-ls": {}
-        })))
-    }
+    // fn language_server_initialization_options(
+    //     &mut self,
+    //     _language_server_id: &LanguageServerId,
+    //     _worktree: &zed::Worktree,
+    // ) -> Result<Option<serde_json::Value>> {
+    //     Ok(Some(serde_json::json!({})))
+    // }
+
+    // Similar to the method above, but generates a JSON configuration file for the server
+    // which is checked periodically. However, I am not sure how this is useful - was added by
+    // Claude, and is therefore commented out.
+
+    // fn language_server_workspace_configuration(
+    //     &mut self,
+    //     _language_server_id: &LanguageServerId,
+    //     _worktree: &zed::Worktree,
+    // ) -> Result<Option<serde_json::Value>> {
+    //     Ok(Some(serde_json::json!({
+    //         "pico8-ls": {}
+    //     })))
+    // }
 }
 
 impl Pico8Extension {
@@ -82,9 +105,9 @@ impl Pico8Extension {
         let relative_server_path = format!("{}/main.js", version_dir);
 
         // Get the extension's working directory for absolute path
-        let cwd = std::env::current_dir()
+        let current_working_directory = std::env::current_dir()
             .map_err(|e| format!("Failed to get current directory: {}", e))?;
-        let server_path = cwd
+        let server_path = current_working_directory
             .join(&version_dir)
             .join("main.js")
             .to_string_lossy()
