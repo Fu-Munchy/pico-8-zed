@@ -2,7 +2,7 @@
 # https://github.com/zed-extensions/lua/blob/main/languages/lua/config.toml
 name = "Pico-8"
 grammar = "lua"
-path_suffixes = ["lua", "p8"]
+path_suffixes = ["lua"]
 line_comments = ["-- ", "--- "]
 block_comment = ["--[ ","]"]
 hard_tabs = true
