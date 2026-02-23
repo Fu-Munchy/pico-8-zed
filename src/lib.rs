@@ -6,7 +6,7 @@ use zed_extension_api::{self as zed, /*serde_json,*/ LanguageServerId, Result};
 /// This extension provides language server support for PICO-8 Lua files (.p8, .lua)
 /// using the bundled pico8-ls language server.
 ///
-/// The language server is bundled in the extension at `language-server/main.js`
+/// The language server is bundled in the extension at `language-server/pico8-ls_v0.6.1.js`
 /// and is run using Node.js.
 struct Pico8Extension {
     cached_server_path: Option<String>,
@@ -102,18 +102,18 @@ impl Pico8Extension {
 
         // Create version-specific directory and path
         let version_dir = format!("pico8-ls-{}", release.version);
-        let relative_server_path = format!("{}/main.js", version_dir);
+        let relative_server_path = format!("{}/pico8-ls_v0.6.1.js", version_dir);
 
         // Get the extension's working directory for absolute path
         let current_working_directory = std::env::current_dir()
             .map_err(|e| format!("Failed to get current directory: {}", e))?;
         let server_path = current_working_directory
             .join(&version_dir)
-            .join("main.js")
+            .join("pico8-ls_v0.6.1.js")
             .to_string_lossy()
             .to_string();
 
-        // Check if the main.js file has been downloaded before.
+        // Check if the pico8-ls_v0.6.1.js file has been downloaded before.
         // The map_or() method defaults to false on Err and appiles m.is_file() if m is a file.
         // Is equivalent to:
         // match std::fs::metadata(path) {
@@ -133,12 +133,12 @@ impl Pico8Extension {
             std::fs::create_dir_all(&version_dir)
                 .map_err(|e| format!("Failed to create directory: {}", e))?;
 
-            // Find the main.js asset in the releases page of the github page
+            // Find the pico8-ls_v0.6.1.js asset in the releases page of the github page
             let asset = release
                 .assets
                 .iter()
-                .find(|a| a.name == "main.js")
-                .ok_or_else(|| "No main.js asset found in release".to_string())?;
+                .find(|a| a.name == "pico8-ls_v0.6.1.js")
+                .ok_or_else(|| "No pico8-ls_v0.6.1.js asset found in release".to_string())?;
 
             // Download the file and save it to the relative_server_path within the extension's directory
             zed::download_file(
