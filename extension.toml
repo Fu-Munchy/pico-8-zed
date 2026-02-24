@@ -12,7 +12,3 @@ languages = ["Pico-8"]
 [grammars.lua]
 repository = "https://github.com/tree-sitter-grammars/tree-sitter-lua"
 commit = "e40f5b6e6df9c2d1d6d664ff5d346a75d71ee6b2"
-
-[my-extension]
-submodule = "extensions/pico-8-zed"
-version = "0.0.1"
