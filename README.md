@@ -22,4 +22,4 @@ From there, open a .lua file, and select the pico8-ls as the language server *an
 This will enable the correct language server and appropriate syntax highlighting, respectively.
 
 ### Zed Extension Manager
-**As I have yet to review the code in src/lib.rs, I will not be publishing the extension to Zed until then.**
+The extension will be available in the zed shortly.
